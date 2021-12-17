@@ -53,7 +53,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"ContainerName": "00-landing",
-							"FileName": "movieDB.csv",
+							"FileName": "moviesDB.csv",
 							"Separetofiler": ","
 						}
 					}
