@@ -1,0 +1,9 @@
+{
+	"name": "adf-adfbricks-carlos",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "e8099dbd-79f9-4f8b-9ad8-512b470e2923",
+		"tenantId": "624e06b7-821d-4d26-b9ea-e1b134d7e565"
+	}
+}
