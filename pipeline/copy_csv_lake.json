@@ -1,0 +1,113 @@
+{
+	"name": "copy_csv_lake",
+	"properties": {
+		"activities": [
+			{
+				"name": "raw_to_trusted",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_csv_generico",
+						"type": "DatasetReference",
+						"parameters": {
+							"ContainerName": "00-landing",
+							"FileName": "movieDB.csv",
+							"Separetofiler": ","
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_csv_generico",
+						"type": "DatasetReference",
+						"parameters": {
+							"ContainerName": "01-raw",
+							"FileName": "moviedbNovo.csv",
+							"Separetofiler": "|"
+						}
+					}
+				]
+			},
+			{
+				"name": "delete_file_landing",
+				"type": "Delete",
+				"dependsOn": [
+					{
+						"activity": "raw_to_trusted",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "ds_csv_generico",
+						"type": "DatasetReference",
+						"parameters": {
+							"ContainerName": "00-landing",
+							"FileName": "movieDB.csv",
+							"Separetofiler": "*"
+						}
+					},
+					"enableLogging": false,
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}
