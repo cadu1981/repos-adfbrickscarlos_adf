@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-adfbricks-carlos"
+		},
+		"ls_azure_sql_connectionString": {
+			"value": ""
+		},
+		"ls_data_lake_accountKey": {
+			"value": ""
+		},
+		"ls_data_lake_properties_typeProperties_url": {
+			"value": "https://dlsadfbrickscarlos.dfs.core.windows.net"
+		},
+		"ls_key_vault_properties_typeProperties_baseUrl": {
+			"value": "https://kv-adfbricks-carlos.vault.azure.net/"
+		}
+	}
+}
