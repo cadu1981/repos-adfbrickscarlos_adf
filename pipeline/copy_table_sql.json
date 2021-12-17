@@ -1,0 +1,69 @@
+{
+	"name": "copy_table_sql",
+	"properties": {
+		"activities": [
+			{
+				"name": "trusted_to_sqltable",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_csv_generico",
+						"type": "DatasetReference",
+						"parameters": {
+							"ContainerName": "01-raw",
+							"FileName": "moviedbNovo.csv",
+							"Separetofiler": "|"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldatabase_generico",
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": "treinamento_adfbricks",
+							"TableName": "MoviesTable"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
